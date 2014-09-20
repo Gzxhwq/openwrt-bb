@@ -1,0 +1,13 @@
+#!/bin/sh
+
+uci -q batch <<-EOF >/dev/null
+          delete ucitrack.@limitcpu[-1]
+          add ucitrack limitcpu
+          set ucitrack.@limitcpu[-1].init=limitcpu
+          commit ucitrack
+EOF
+
+/etc/init.d/limitcpu enable
+
+rm -f /tmp/luci-indexcache
+exit 0
